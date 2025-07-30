@@ -1,19 +1,19 @@
-import { useState } from 'react';
-import { Link, useLocation } from 'react-router-dom';
-import { Menu, X, Scissors } from 'lucide-react';
-import { Button } from '@/components/ui/button';
+import { useState } from "react";
+import { Link, useLocation } from "react-router-dom";
+import { Menu, X, Scissors } from "lucide-react";
+import { Button } from "@/components/ui/button";
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const location = useLocation();
 
   const navigation = [
-    { name: 'Home', href: '/' },
-    { name: 'Services', href: '/services' },
-    { name: 'Gallery', href: '/gallery' },
-    { name: 'Booking', href: '/booking' },
-    { name: 'About', href: '/about' },
-    { name: 'Contact', href: '/contact' },
+    { name: "Home", href: "/" },
+    { name: "Services", href: "/services" },
+    { name: "Gallery", href: "/gallery" },
+    { name: "Booking", href: "/booking" },
+    { name: "About", href: "/about" },
+    { name: "Contact", href: "/contact" },
   ];
 
   const isActive = (path: string) => location.pathname === path;
@@ -41,8 +41,8 @@ const Header = () => {
                   to={item.href}
                   className={`relative px-3 py-2 text-sm font-medium transition-colors duration-300 ${
                     isActive(item.href)
-                      ? 'text-primary'
-                      : 'text-foreground hover:text-primary'
+                      ? "text-primary"
+                      : "text-foreground hover:text-primary"
                   }`}
                 >
                   {item.name}
@@ -55,7 +55,11 @@ const Header = () => {
 
             {/* CTA Button */}
             <div className="hidden md:block">
-              <Button asChild className="btn-gradient">
+              <Button
+                asChild
+                size="sm"
+                className="text-lg px-8 py-4 border-white text-white hover:bg-white hover:text-primary"
+              >
                 <Link to="/booking">Book Now</Link>
               </Button>
             </div>
@@ -65,7 +69,11 @@ const Header = () => {
               onClick={() => setIsMenuOpen(!isMenuOpen)}
               className="md:hidden p-2 rounded-lg hover:bg-white/10 transition-colors"
             >
-              {isMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+              {isMenuOpen ? (
+                <X className="h-6 w-6" />
+              ) : (
+                <Menu className="h-6 w-6" />
+              )}
             </button>
           </div>
         </div>
@@ -81,8 +89,8 @@ const Header = () => {
                   onClick={() => setIsMenuOpen(false)}
                   className={`block px-3 py-2 rounded-lg text-base font-medium transition-colors ${
                     isActive(item.href)
-                      ? 'text-primary bg-primary/10'
-                      : 'text-foreground hover:text-primary hover:bg-white/5'
+                      ? "text-primary bg-primary/10"
+                      : "text-foreground hover:text-primary hover:bg-white/5"
                   }`}
                 >
                   {item.name}
@@ -99,7 +107,7 @@ const Header = () => {
           </div>
         )}
       </header>
-      
+
       {/* Spacer for fixed header */}
       <div className="h-16" />
     </>
