@@ -199,7 +199,6 @@ const Booking = () => {
                     className="space-y-6"
                     name="booking"
                     data-netlify="true"
-                    hidden
                   >
                     {/* Personal Information */}
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -209,7 +208,7 @@ const Booking = () => {
                           id="name"
                           name="name"
                           placeholder="Enter your full name"
-                          // required
+                          required
                         />
                       </div>
                       <div className="space-y-2">
@@ -219,7 +218,7 @@ const Booking = () => {
                           name="phone"
                           type="tel"
                           placeholder="+1 (555) 123-4567"
-                          // required
+                          required
                         />
                       </div>
                     </div>
