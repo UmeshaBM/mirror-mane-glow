@@ -2,41 +2,68 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
+/* Mirror & Mane Premium Saloon Design System
 All colors MUST be HSL.
 */
 
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@300;400;500;600;700&display=swap');
+
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
+    /* Premium Color Palette */
+    --background: 318 20% 98%;
+    --foreground: 260 15% 15%;
 
-    --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
+    --card: 320 25% 97%;
+    --card-foreground: 260 15% 15%;
 
-    --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
+    --popover: 320 30% 96%;
+    --popover-foreground: 260 15% 15%;
 
-    --primary: 222.2 47.4% 11.2%;
-    --primary-foreground: 210 40% 98%;
+    /* Deep Violet Primary */
+    --primary: 260 85% 25%;
+    --primary-foreground: 320 20% 98%;
+    --primary-light: 260 70% 40%;
+    --primary-dark: 260 90% 15%;
 
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
+    /* Rose Gold Secondary */
+    --secondary: 15 65% 75%;
+    --secondary-foreground: 260 15% 15%;
+    --secondary-light: 15 60% 85%;
+    --secondary-dark: 15 70% 60%;
 
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
+    /* Pastel Accents */
+    --accent: 280 40% 85%;
+    --accent-foreground: 260 15% 15%;
+    --accent-rose: 340 60% 85%;
+    --accent-lavender: 270 50% 90%;
 
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 222.2 47.4% 11.2%;
+    --muted: 280 20% 92%;
+    --muted-foreground: 260 10% 45%;
 
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
+    --destructive: 0 75% 60%;
+    --destructive-foreground: 320 20% 98%;
 
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 222.2 84% 4.9%;
+    --border: 280 25% 88%;
+    --input: 280 25% 94%;
+    --ring: 260 85% 25%;
 
-    --radius: 0.5rem;
+    --radius: 1rem;
+
+    /* Premium Gradients */
+    --gradient-primary: linear-gradient(135deg, hsl(var(--primary)), hsl(var(--primary-light)));
+    --gradient-rose: linear-gradient(135deg, hsl(var(--secondary)), hsl(var(--secondary-light)));
+    --gradient-hero: linear-gradient(135deg, hsl(var(--primary)) 0%, hsl(var(--secondary)) 100%);
+    --gradient-glass: linear-gradient(135deg, hsla(var(--accent), 0.1), hsla(var(--secondary), 0.1));
+    
+    /* Elegant Shadows */
+    --shadow-glass: 0 8px 32px hsla(var(--primary), 0.1);
+    --shadow-elegant: 0 20px 60px hsla(var(--primary), 0.15);
+    --shadow-rose: 0 10px 40px hsla(var(--secondary), 0.2);
+    
+    /* Smooth Transitions */
+    --transition-smooth: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-bounce: all 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
 
     --sidebar-background: 0 0% 98%;
 
@@ -100,6 +127,68 @@ All colors MUST be HSL.
   }
 
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground font-inter antialiased;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-poppins font-semibold;
+  }
+}
+
+@layer components {
+  /* Glassmorphism Effect */
+  .glass {
+    @apply backdrop-blur-lg bg-white/10 border border-white/20;
+    box-shadow: var(--shadow-glass);
+  }
+
+  /* Premium Button Variants */
+  .btn-gradient {
+    background: var(--gradient-primary);
+    @apply text-primary-foreground shadow-lg transition-all duration-300 hover:scale-105 hover:shadow-xl;
+  }
+
+  .btn-rose {
+    background: var(--gradient-rose);
+    @apply text-secondary-foreground shadow-lg transition-all duration-300 hover:scale-105;
+  }
+
+  /* Hero Section */
+  .hero-gradient {
+    background: var(--gradient-hero);
+  }
+
+  /* Smooth Scroll */
+  .smooth-scroll {
+    scroll-behavior: smooth;
+  }
+
+  /* Floating Animation */
+  .float {
+    animation: float 3s ease-in-out infinite;
+  }
+
+  @keyframes float {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-10px); }
+  }
+
+  /* Fade In Animation */
+  .fade-in {
+    animation: fadeIn 0.8s ease-out forwards;
+    opacity: 0;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* Gradient Text */
+  .gradient-text {
+    background: var(--gradient-hero);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
   }
 }
