@@ -91,7 +91,7 @@ const Booking = () => {
       time: formData.get("time"),
       notes: formData.get("notes"),
     };
-    formData.append("form-name", "charming-syrniki-733aff");
+    formData.append("form-name", "booking");
 
     try {
       const searchParams = new URLSearchParams();
@@ -197,7 +197,7 @@ const Booking = () => {
                   <form
                     onSubmit={handleSubmit}
                     className="space-y-6"
-                    name="charming-syrniki-733aff"
+                    name="booking"
                     data-netlify="true"
                   >
                     {/* Personal Information */}
