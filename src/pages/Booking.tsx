@@ -13,6 +13,7 @@ import {
 } from "@/components/ui/select";
 import { Calendar } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
+import { supabase } from "@/lib/supabase";
 
 const Booking = () => {
   const { toast } = useToast();
@@ -77,45 +78,101 @@ const Booking = () => {
     "7:30 PM",
   ];
 
+  // const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+  //   e.preventDefault();
+  //   setIsSubmitting(true);
+
+  //   const formData = new FormData(e.currentTarget);
+  //   const bookingData = {
+  //     name: formData.get("name"),
+  //     phone: formData.get("phone"),
+  //     email: formData.get("email"),
+  //     service: formData.get("service"),
+  //     date: formData.get("date"),
+  //     time: formData.get("time"),
+  //     notes: formData.get("notes"),
+  //   };
+  //   formData.append("form-name", "booking");
+
+  //   try {
+  //     const searchParams = new URLSearchParams();
+  //     formData.forEach((value, key) => {
+  //       searchParams.append(key, value.toString());
+  //     });
+
+  //     await fetch("/", {
+  //       method: "POST",
+  //       headers: { "Content-Type": "application/x-www-form-urlencoded" },
+  //       body: searchParams.toString(),
+  //     });
+  //     console.log(bookingData);
+  //     setIsSubmitted(true);
+  //     toast({
+  //       title: "Booking Confirmed! 🎉",
+  //       description:
+  //         "We'll contact you soon to confirm your appointment details.",
+  //     });
+  //   } catch (error) {
+  //     toast({
+  //       title: "Booking Failed",
+  //       description:
+  //         "Something went wrong. Please try again or call us directly.",
+  //       variant: "destructive",
+  //     });
+  //   } finally {
+  //     setIsSubmitting(false);
+  //   }
+  // };
+
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setIsSubmitting(true);
 
     const formData = new FormData(e.currentTarget);
     const bookingData = {
-      name: formData.get("name"),
-      phone: formData.get("phone"),
-      email: formData.get("email"),
-      service: formData.get("service"),
-      date: formData.get("date"),
-      time: formData.get("time"),
-      notes: formData.get("notes"),
+      name: formData.get("name")?.toString(),
+      phone: formData.get("phone")?.toString(),
+      email: formData.get("email")?.toString(),
+      service: formData.get("service")?.toString(),
+      date: formData.get("date")?.toString(),
+      time: formData.get("time")?.toString(),
+      notes: formData.get("notes")?.toString(),
     };
-    formData.append("form-name", "booking");
 
     try {
-      const searchParams = new URLSearchParams();
-      formData.forEach((value, key) => {
-        searchParams.append(key, value.toString());
-      });
+      // 1. Check for existing booking
+      const { data: existing, error: fetchError } = await supabase
+        .from("bookings")
+        .select("*")
+        .eq("date", bookingData.date)
+        .eq("time", bookingData.time)
+        .maybeSingle();
 
-      await fetch("/", {
-        method: "POST",
-        headers: { "Content-Type": "application/x-www-form-urlencoded" },
-        body: searchParams.toString(),
-      });
-      console.log(bookingData);
+      if (existing) {
+        toast({
+          title: "Slot Already Booked",
+          description: "Please choose a different time or date.",
+          variant: "destructive",
+        });
+        return;
+      }
+
+      // 2. Store booking
+      const { error: insertError } = await supabase
+        .from("bookings")
+        .insert([bookingData]);
+
+      if (insertError) throw insertError;
+
       setIsSubmitted(true);
       toast({
-        title: "Booking Confirmed! 🎉",
-        description:
-          "We'll contact you soon to confirm your appointment details.",
+        title: "Booking Confirmed 🎉",
+        description: "We’ll reach out soon to confirm your appointment.",
       });
     } catch (error) {
       toast({
         title: "Booking Failed",
-        description:
-          "Something went wrong. Please try again or call us directly.",
+        description: "Something went wrong. Please try again later.",
         variant: "destructive",
       });
     } finally {
